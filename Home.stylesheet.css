@@ -8,8 +8,9 @@
 }
 h1 {
     margin-bottom: 50px;
+    border-radius: 28px;
     text-align: center;
-    background-color: darkcyan;
+    background-color: lightseagreen;
     text-shadow: 1px 1px 1px grey,
                 2px 2px 1px grey;
 }
@@ -24,7 +25,7 @@ body {
     height: 20px;
     padding: 15px 12px 6px;
     border-radius: 4px;
-    margin-bottom: 20px;
+    
 }
 
 .home_button {
@@ -41,14 +42,18 @@ body {
     
 }
 
+#password {
+    margin-top: 20px;
+}
+
 #login_button {
     margin-top: 30px;
-    background-color: darkcyan;
+    background-color: lightseagreen;
     color: white;
 }
 
 #login_button:hover {
-    background-color: blue;
+    background-color: darkcyan;
 }
 
 #new_user {
@@ -63,4 +68,9 @@ body {
 #create_button:hover {
     background-color: darkgray;
     
+}
+
+#invalid_user {
+    color: white;
+    font-weight: bold;
 }
