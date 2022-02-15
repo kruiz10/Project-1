@@ -1,17 +1,20 @@
 let http = require("http");
 let mysql = require("mysql");
 
+
 let httpServer = http.createServer(processRequest);
 httpServer.listen(8080);
 
 function processRequest(request, response) {
     response.writeHead(200, {"Content-Type": "text/html"});
-    res = response;
+    
     let host = "http://" + request.headers["host"];
     let url = new URL(request.url, host);
     console.log(url.href);
 
     initalizeDB();
+
+    response.write("Login Successful")
 }
 
 function initalizeDB() {
