@@ -1,0 +1,31 @@
+body {background-color: cornsilk}
+
+h1 {
+    margin-bottom: 50px;
+    border-radius: 28px;
+    text-align: center;
+    background-color: darkcyan;
+    background-color: lightseagreen;
+    text-shadow: 1px 1px 1px grey,
+                2px 2px 1px grey;
+}
+
+#Interests {
+    width: 350px;
+    margin:auto;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px lightgrey;
+    background-color: white;
+}
+
+.Scrollbox {
+    width:150px;
+    height:150px;
+    line-height:  5px;
+    overflow:scroll;
+    padding:5px;
+    background-color:white;
+    color:black;
+    border:4px double lightseagreen;
+}
