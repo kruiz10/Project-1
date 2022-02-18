@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <title>Interest Matcher</title>
-        <link href="Home.stylesheet.css" rel="stylesheet">
+        <link href="/Home.stylesheet.css" rel="stylesheet">
         <script src="Home.script.js"></script>
     </head>
 
@@ -12,12 +12,12 @@
             <h1>Interest Matcher</h1>
 
             <div id="login_card">
-                <form id="login_form" action="http://localhost:8080/Sql.js">
+                <form id="login_form" >
                     <h2>Sign in</h2>
                     <input id="username" class="login" placeholder="Email"> <br>
                     <label id="invalid_user">Please enter a valid username</label>
                     <input id="password" type="password" class="login" placeholder="Password"> <br>
-                    <input type="submit" class="home_button" id="login_button" value="Sign in" onclick="login_validation()">
+                    <input type="submit" class="home_button" id="login_button" value="Sign in" onclick="save_account()">
 
                     <h4 id="new_user">New to Interest Matcher?</h4>
 
