@@ -1,5 +1,8 @@
 let mysql = require("mysql")
 let path = require("path")
+let parse = require("node-html-parser").parse
+let fs = require("fs")
+
 
 let database = mysql.createConnection({
     host : "107.180.1.16",
@@ -58,6 +61,8 @@ exports.register = (req, res) => {
 
 }
 
+
+
 exports.login = async (req, res) => {
     try {
         let {username, password} = req.body
@@ -70,13 +75,16 @@ exports.login = async (req, res) => {
 
             if( !results || password != results[0].Password) {
                 console.log('Email or password incorrect')
-                console.log(password != results[0].Password)
-                console.log(password)
-                console.log(results[0].Password)
+                
             }
 
             else {
+                let logged_in = ''
+                logged_in = `${results[0].FirstName}  ${results[0].LastName}`
+                console.log(`User ${logged_in} has logged in`)
+
                 let publicDirectory = path.join(__dirname, '..')
+
                 
                 res.sendFile(publicDirectory + '/public/Login.html')
             }
@@ -86,3 +94,4 @@ exports.login = async (req, res) => {
         console.log(error)
     }
 }
+
