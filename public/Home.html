@@ -12,12 +12,12 @@
             <h1>Interest Matcher</h1>
 
             <div id="login_card">
-                <form id="login_form" >
+                <form id="login_form" action="/auth/login" method="POST" >
                     <h2>Sign in</h2>
-                    <input id="username" class="login" placeholder="Email"> <br>
+                    <input id="username" name="username" class="login" placeholder="Email"> <br>
                     <label id="invalid_user">Please enter a valid username</label>
-                    <input id="password" type="password" class="login" placeholder="Password"> <br>
-                    <input type="submit" class="home_button" id="login_button" value="Sign in" onclick="save_account()">
+                    <input id="password" name="password" type="password" class="login" placeholder="Password"> <br>
+                    <input type="submit" class="home_button" id="login_button" value="Sign in">
 
                     <h4 id="new_user">New to Interest Matcher?</h4>
 

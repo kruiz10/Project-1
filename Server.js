@@ -93,6 +93,7 @@ app.get("/create.account.html", (req, res) => {
 
 app.use('/auth', require('./routes/auth'))
 
+
 /*router.post('/create.account.html', (req, res) => {
     console.log(req.body)
     res.send("Form Submitted")

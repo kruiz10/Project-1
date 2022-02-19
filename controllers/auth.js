@@ -1,4 +1,5 @@
 let mysql = require("mysql")
+let path = require("path")
 
 let database = mysql.createConnection({
     host : "107.180.1.16",
@@ -55,4 +56,33 @@ exports.register = (req, res) => {
             })
     })
 
+}
+
+exports.login = async (req, res) => {
+    try {
+        let {username, password} = req.body
+
+        if ( !username || !password ) {
+            console.log("no email or password")
+        }
+
+        database.query('SELECT * FROM Users WHERE Email = ?', [username], async (error, results) => {
+
+            if( !results || password != results[0].Password) {
+                console.log('Email or password incorrect')
+                console.log(password != results[0].Password)
+                console.log(password)
+                console.log(results[0].Password)
+            }
+
+            else {
+                let publicDirectory = path.join(__dirname, '..')
+                
+                res.sendFile(publicDirectory + '/public/Login.html')
+            }
+
+        })
+    } catch (error) {
+        console.log(error)
+    }
 }
