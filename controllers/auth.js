@@ -86,7 +86,7 @@ exports.login = async (req, res) => {
                 let publicDirectory = path.join(__dirname, '..')
 
                 
-                res.sendFile(publicDirectory + '/public/Login.html')
+                res.sendFile(publicDirectory + '/public/Home_page.html')
             }
 
         })
