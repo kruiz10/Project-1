@@ -25,7 +25,7 @@ exports.register = (req, res) => {
         FirstName, 
         LastName, 
         password, 
-        verifypassword, 
+        Verifypassword, 
         Email,
         PhoneNumber
     } = req.body
@@ -39,12 +39,15 @@ exports.register = (req, res) => {
             console.log("Email already in use")
             
         }
-        else if (password !== verifypassword) {
+        else if (password !== Verifypassword) {
             console.log("passwords do not match")
+            console.log(password)
+            console.log(Verifypassword)
             
         }
 
         database.query('INSERT INTO Users SET ?', {
+            
             FirstName: FirstName, 
             LastName: LastName, 
             Email: Email, 
@@ -55,6 +58,10 @@ exports.register = (req, res) => {
                 }
                 else {
                     console.log("user registered")
+                    let publicDirectory = path.join(__dirname, '..')
+
+                
+                    res.sendFile(publicDirectory + '/public/Home.html')
                 }
             })
     })
@@ -74,6 +81,8 @@ exports.login = async (req, res) => {
         database.query('SELECT * FROM Users WHERE Email = ?', [username], async (error, results) => {
 
             if( !results || password != results[0].Password) {
+                console.log(password)
+                console.log(results[0])
                 console.log('Email or password incorrect')
                 
             }
