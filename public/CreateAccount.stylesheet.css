@@ -1,5 +1,5 @@
 #create_account {
-    width: 350px;
+    width: 800px;
     margin:auto;
     padding: 25px;
     border-radius: 12px;
@@ -34,6 +34,7 @@ body {
     
     
 }
+
 
 .home_button {
     font-size: 26px;

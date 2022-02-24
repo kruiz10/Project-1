@@ -1,10 +1,12 @@
 let mysql = require("mysql")
 let path = require("path")
-let parse = require("node-html-parser").parse
 let fs = require("fs")
+let cheerio = require("cheerio")
+let cheerioTableParser = require('cheerio-tableparser')
+const { type } = require("os")
 
 
-let database = mysql.createConnection({
+let database = mysql.createPool({
     host : "107.180.1.16",
     database : "sprog2022team11",
     user : "sprog2022team11",
@@ -27,7 +29,10 @@ exports.register = (req, res) => {
         password, 
         Verifypassword, 
         Email,
-        PhoneNumber
+        PhoneNumber,
+        Interest1,
+        Interest2,
+        Interest3
     } = req.body
 
     database.query('SELECT email FROM Users WHERE email = ?', [Email], (error, results) => {
@@ -52,7 +57,10 @@ exports.register = (req, res) => {
             LastName: LastName, 
             Email: Email, 
             Password: password, 
-            PhoneNumber: PhoneNumber}, (error, results) => {
+            PhoneNumber: PhoneNumber,
+            Interest1: Interest1,
+            Interest2: Interest2,
+            Interest3: Interest3 }, (error, results) => {
                 if(error) {
                     console.log(error)
                 }
@@ -88,14 +96,205 @@ exports.login = async (req, res) => {
             }
 
             else {
-                let logged_in = ''
-                logged_in = `${results[0].FirstName}  ${results[0].LastName}`
-                console.log(`User ${logged_in} has logged in`)
+                
+                let logged_in = results[0]
+                console.log(`User ${logged_in.FirstName} ${logged_in.LastName} has logged in`)
+
+                
 
                 let publicDirectory = path.join(__dirname, '..')
 
+                /*let html = fs.readFileSync(publicDirectory + '/public/Home_page.html').toString()
+                let $ = cheerio.load(html)
+
+                cheerioTableParser($)
+
+                let table = $("table").parsetable()
+                console.log(table)*/
+
+                let matches = []
+
+                database.query('select * from Users', (error, results) => {
+                    if (error) {
+                        console.log(error)
+                    }
+                    else {
+                        for (let i = 0; i < results.length; i++) {
+                            if ((results[i].Interest1 === logged_in.Interest1 || 
+                                results[i].Interest2 === logged_in.Interest2 ||
+                                results[i].Interest3 === logged_in.Interest3) &&
+                                results[i].Email != logged_in.Email) {
+
+                                matches.push(results[i])
+                                console.log(matches)
+                                let htmldata = `
+                                <!DOCTYPE html>
+                                <html lang="en">
+                                <head>
+                                    <meta charset="UTF-8">
+                                    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+                                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                                    <title>Interest Matcher Home Page</title>
+                                    <link href="/Home_Page_style.css" rel="Stylesheet">
+                                    <script src="jscript.js"></script>
+                                </head>
+                                <body>
+
+                                    <h1>Welcome, ${logged_in.FirstName} ${logged_in.LastName}</h1>
+
+                                    <div id="Interests" class="Scrollbox">
+                                        <h3>You matched interests with...</h3>
+                                        <table id="Users">
+
+                                            
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Similar Interests</th>
+                                                <th>Contact Info</th>
+                                            </tr>
+
+                                            <tr>
+                                                <td>${matches[0].FirstName} ${matches[0].LastName}</td>
+                                                <td>${matches[0].Interest1}, ${matches[0].Interest2}, ${matches[0].Interest3}</td>
+                                                <td>${matches[0].Email}</td>
+                                            </tr>
+
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                            
+
+                                        </table>
+
+                                    </div>
+                                </body>
+                                </html>
+                        `
+                        fs.writeFile(publicDirectory + '/public/new.html', htmldata, (err) => {
+                            if (err) {
+                                console.log(err)
+                            }
+                            else {
+                                console.log('res.writefile worked')
+                                fs.readFile(publicDirectory + '/public/new.html', 'utf-8', (err, data) => {
+                                    if (err) {
+                                        console.log(err)
+                                    }
+                                    else {
+                                        res.sendFile(publicDirectory + '/public/new.html')
+                                    }
+                                })
+                            }
+                        })
+                        
+                            }
+                        }
+                        
+                    }
+                })
                 
-                res.sendFile(publicDirectory + '/public/Home_page.html')
+                /*let htmldata = `
+                        <!DOCTYPE html>
+                        <html lang="en">
+                        <head>
+                            <meta charset="UTF-8">
+                            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+                            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                            <title>Interest Matcher Home Page</title>
+                            <link href="/Home_Page_style.css" rel="Stylesheet">
+                            <script src="jscript.js"></script>
+                        </head>
+                        <body>
+
+                            <h1>Welcome, ${logged_in.FirstName} ${logged_in.LastName}</h1>
+
+                            <div id="Interests" class="Scrollbox">
+                                <h3>You matched interests with...</h3>
+                                <table id="Users">
+
+                                    
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Similar Interests</th>
+                                        <th>Contact Info</th>
+                                    </tr>
+
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    
+
+                                </table>
+
+                            </div>
+                        </body>
+                        </html>
+                `
+                fs.writeFile(publicDirectory + '/public/new.html', htmldata, (err) => {
+                    if (err) {
+                        console.log(err)
+                    }
+                    else {
+                        console.log('res.writefile worked')
+                        fs.readFile(publicDirectory + '/public/new.html', 'utf-8', (err, data) => {
+                            if (err) {
+                                console.log(err)
+                            }
+                            else {
+                                res.sendFile(publicDirectory + '/public/new.html')
+                            }
+                        })
+                    }
+                })*/
+                
+               /* res.sendFile(publicDirectory + '/public/Home_page.html')*/
+                
             }
 
         })
@@ -103,4 +302,9 @@ exports.login = async (req, res) => {
         console.log(error)
     }
 }
+
+/*exports.isLoggedIn = (req, res, next) => {
+    req.message = "Inside middleware"
+    next()
+}*/
 
