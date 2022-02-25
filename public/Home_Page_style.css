@@ -63,3 +63,30 @@ th, td {
 #Users td:first-child {
     text-align: left;
 }
+#edit {
+    width: 345px;
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+}  
+
+#edit_button {
+    border-collapse: separate;
+    border-spacing: 0 15px;
+    font-size: 26px;
+    text-align: center;
+    vertical-align: middle;
+    
+    font-weight: 600;
+    padding: 0 24px;
+    border-radius: 28px;
+    width: 345px;
+    height: 40px;
+
+    background-color: lightseagreen;
+    color: white;
+}
+
+#edit_button:hover {
+    background-color: darkcyan;
+}

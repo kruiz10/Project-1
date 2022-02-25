@@ -44,6 +44,8 @@ app.get("/create.account.html", (req, res) => {
     res.sendFile(__dirname + "/public/create.account.html")
 })
 
+
+
 /*app.use('/', require('./routes/pages'))*/
 
 app.use('/auth', require('./routes/auth'))
