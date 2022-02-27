@@ -63,7 +63,7 @@ th, td {
 #Users td:first-child {
     text-align: left;
 }
-#edit {
+.edit {
     width: 345px;
     margin-top: 20px;
     margin-left: auto;
@@ -90,6 +90,26 @@ th, td {
 #edit_button:hover {
     background-color: darkcyan;
 }
+#logout_button {
+    background-color: lightgray;
+    border-collapse: separate;
+    border-spacing: 0 15px;
+    font-size: 26px;
+    text-align: center;
+    vertical-align: middle;
+    
+    font-weight: 600;
+    padding: 0 24px;
+    border-radius: 28px;
+    width: 345px;
+    height: 40px;
+
+}
+
+#logout_button:hover {
+    background-color: darkgray;
+}
+
 .dropbtn {
     background-color: white;
     color: black;

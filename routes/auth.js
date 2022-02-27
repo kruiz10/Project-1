@@ -11,6 +11,8 @@ router.post('/edit', authController.edit)
 
 router.post('/update', authController.update)
 
+router.post('/logout', authController.logout)
+
 
 
 module.exports = router
